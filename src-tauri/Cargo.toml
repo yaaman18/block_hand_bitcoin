@@ -1,0 +1,28 @@
+[package]
+name = "block_hand_bitcoin"
+version = "0.0.1"
+description = "Block Hand Bitcoin is an application that generates Bitcoin private keys."
+authors = ["Vaultwear Co., Ltd. <vaultwear.site>"]
+license = "Copyright © 2024 Solidity Vaultwear Co., Ltd. All Rights Reserved"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1", features = [] }
+
+[dependencies]
+tauri = { version = "1", features = ["shell-open"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+argon2 = "0.5.2"
+sha3 = "0.10.8"
+bs58 = "0.5.0"
+secp256k1 = "0.28.1"
+bitcoin = "0.31.1"
+rand = "0.8.5"
+hex = "0.4.3"
+
+[features]
+# This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
