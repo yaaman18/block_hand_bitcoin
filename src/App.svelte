@@ -5,12 +5,11 @@
 	let providedCode = '';
 	let passwordString = '';
 	let bitcoinPrivateKey = '';
+	let mnemonicPhrase = '';
 	let error = '';
 	let warning = '';
 	let isPasswordVisible = true;
 	let isButtonDisabled = true;
-
-
 
 	function providedCodeInput() {
 		if (providedCode.length < 16) {
@@ -43,18 +42,18 @@
 		// 他の条件が満たされている場合のみ、バックエンドの関数を呼び出す
 		if (warning === '') {
 			try {
-				const result = await invoke('generate_bitcoin_private_key', { providedCode, passwordString });
-				if (typeof result === 'string') {
-					bitcoinPrivateKey = result; // コンポーネントのステートを更新
+				const result = await invoke<[string, string]>('generate_hd_wallet_xprv', { providedCode, passwordString });
+				if (Array.isArray(result) && result.length === 2) {
+					bitcoinPrivateKey = result[0]; // コンポーネントのステートを更新
+					mnemonicPhrase = result[1];
 				} else {
-					console.error('Result is not a string');
+					console.error('Result is not the expected format');
 				}
 			} catch (err) {
 				error = (err as Error).message;
 			}
 		}
 	}
-
 
 	// 入力検証を行う関数
 	function validateInput() {
@@ -82,24 +81,19 @@
 	}
 
 	function generateKeys() {
-    handleFormSubmit();
-  }
-
-
+		handleFormSubmit();
+	}
 </script>
 
 <main class="background">
 	<div class="container">
-		<h1>
-			Block Hand key generator
-		</h1>
+		<h1>Block Hand key generator</h1>
 		<h2>
 			Please enter a password using characters other than
 			+, /, 0 (zero), O (uppercase 'o'), I (uppercase 'i'),
 			and l (lowercase 'L')
 		</h2>
 		<div class="password-input">
-
 			{#if isPasswordVisible}
 				<input
 					class="input-field"
@@ -137,7 +131,6 @@
 					on:input={validateInput}
 				/>
 			{/if}
-
 		</div>
 
 		<button on:click={generateKeys} disabled={isButtonDisabled}>Generate Keys</button>
@@ -150,10 +143,15 @@
 			<p class="key">Private Key: {bitcoinPrivateKey}</p>
 			<button on:click={() => copyToClipboard(bitcoinPrivateKey)}>Copy to Clipboard</button>
 		{/if}
+
+		{#if mnemonicPhrase}
+			<p class="key">Mnemonic Phrase: {mnemonicPhrase}</p>
+			<button on:click={() => copyToClipboard(mnemonicPhrase)}>Copy to Clipboard</button>
+		{/if}
+
 		{#if error}
 			<p class="error">{error}</p>
 		{/if}
-
 	</div>
 </main>
 

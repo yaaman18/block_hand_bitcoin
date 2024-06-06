@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1",
-    "bs58": "^5.0.0"
+    "bs58": "^5.0.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
