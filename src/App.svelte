@@ -139,10 +139,6 @@
 			<p class="warning">{warning}</p>
 		{/if}
 
-		{#if bitcoinPrivateKey}
-			<p class="key">Private Key: {bitcoinPrivateKey}</p>
-			<button on:click={() => copyToClipboard(bitcoinPrivateKey)}>Copy to Clipboard</button>
-		{/if}
 
 		{#if mnemonicPhrase}
 			<p class="key">Mnemonic Phrase: {mnemonicPhrase}</p>
