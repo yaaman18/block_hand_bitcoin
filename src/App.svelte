@@ -186,6 +186,7 @@
 			<p class="error">{error}</p>
 		{/if}
 	</div>
+	<h4>©︎Vaultwear</h4>
 </main>
 
 <style>
