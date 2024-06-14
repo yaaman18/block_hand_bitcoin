@@ -116,7 +116,7 @@
 	<div class="container">
 		<div class="moveUp2"></div>
 
-		<h2>Let's start use Bitcoin mnemonic generator</h2>
+		<h2>Let's start using the Bitcoin mnemonic phrase generator</h2>
 		<h4>Block Hand Bitcoin is an open-source application that generates mnemonic phrases.<br>
 			By combining the string engraved on your accessory with your own unique password, you can manage the mnemonics of your Bitcoin wallet.</h4>
 		<h3>
