@@ -3,7 +3,7 @@ name = "block_hand_bitcoin"
 version = "0.0.1"
 description = "Block Hand Bitcoin is an application that generates Bitcoin private keys."
 authors = ["Vaultwear Co., Ltd. <vaultwear.site>"]
-license = "Copyright © 2024 Solidity Vaultwear Co., Ltd. All Rights Reserved"
+license = "Copyright © 2024 Vaultwear Co., Ltd. All Rights Reserved"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

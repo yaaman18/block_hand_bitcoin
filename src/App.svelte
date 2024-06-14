@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invoke } from '@tauri-apps/api/tauri';
 	import bs58 from 'bs58';
+	import Header from './Header.svelte';
 
 	let providedCode = '';
 	let passwordString = '';
@@ -85,14 +86,19 @@
 	}
 </script>
 
+
+<Header title="Block Hand Bitcoin" />
+
 <main class="background">
 	<div class="container">
-		<h1>Block Hand key generator</h1>
-		<h2>
+		<h2>Let's start use Bitcoin mnemonic generator</h2>
+		<h4>Block Hand Bitcoin is an open-source application that generates mnemonic phrases.<br>
+			By combining the string engraved on your accessory with your own unique password, you can manage the mnemonics of your Bitcoin wallet.</h4>
+		<h3>
 			Please enter a password using characters other than
 			+, /, 0 (zero), O (uppercase 'o'), I (uppercase 'i'),
-			and l (lowercase 'L')
-		</h2>
+			and l (lowercase 'L') by Base58
+		</h3>
 		<div class="password-input">
 			{#if isPasswordVisible}
 				<input
@@ -161,24 +167,20 @@
 	}
 
 	.container {
+		   width: 50vmin; /* 縦の2倍のサイズになるように幅を設定 */
+
 		display: flex; /* Flexboxを有効にします */
 		flex-direction: column; /* 子要素を縦方向に配置します */
 		justify-content: center; /* 子要素を水平方向で中央に配置します */
 		align-items: center; /* 子要素を垂直方向で中央に配置します */
 		margin: 0 auto; /* ウィンドウ全体を中央に配置します */
 		font-family: 'Courier New', monospace;
-		background-image: linear-gradient(to right, var(--primary-color), #ffffff);
 		width: 100%;
-		/* 高さを常に画面いっぱいにする */
-		height: 100vh;
-
 	}
-
 	.background {
 
 		background-image: linear-gradient(
 			to right,
-
 		); /* グラデーション適用 */
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
@@ -187,17 +189,25 @@
 		justify-content: center; /* 子要素を水平方向で中央に配置します */
 		align-items: center; /* 子要素を垂直方向で中央に配置します */
 	}
-     h1 {
-		font-size: 1.5rem;
+     h2 {
+		margin-top: 6rem;
 		margin-bottom: 3rem;
+		font: 2rem "Fira Sans", sans-serif, bold;
+		color: #51b24d;
 	 }
-	 h2{
+	 h3{
 		font-size: 1rem;
 		margin-bottom: 3rem;
 		margin-left: 10rem;
 		margin-right: 10rem;
        color: var(--accent-color);
 	   text-align: left;
+	 }
+	 h4{
+		width: 60%;
+color: var(--accent-color);
+margin-bottom: 4rem;
+   text-align: left;
 	 }
 	input {
 		width: 80%;

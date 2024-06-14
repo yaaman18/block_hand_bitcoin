@@ -20,8 +20,8 @@
     "windows": [
       {
         "title": "block_han_bitcoin",
-        "width": 800,
-        "height": 1000
+        "width": 900,
+        "height": 1800
       }
     ],
     "security": {
