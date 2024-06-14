@@ -5,7 +5,7 @@
 
 <header>
     <div class="header-main">
-        <img src="src-tauri/icons/128x128@2x.png" alt="Logo">
+        <img src="/img/128x128@2x.png" alt="Logo">
         <h1>{title}</h1>
     </div>
     <div class="header-2">
