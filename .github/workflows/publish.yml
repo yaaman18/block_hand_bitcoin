@@ -71,7 +71,7 @@ jobs:
       - name: verify entitlements file
         if: matrix.platform == 'macos-latest'
         run: |
-          ls -la path/to/entitlements.plist
+          ls -la src-tauri/entitlements.plist
 
       - name: debug signing
         if: matrix.platform == 'macos-latest'
@@ -93,4 +93,4 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.settings.args }}
-          entitlements: path/to/entitlements.plist
+          entitlements: src-tauri/entitlements.plist # 正しいパスを設定
