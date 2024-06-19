@@ -68,6 +68,17 @@ jobs:
         run: |
           security find-certificate -a -c "Developer ID Application: Mitsuyuki Yamaguchi" -p
 
+      - name: verify entitlements file
+        if: matrix.platform == 'macos-latest'
+        run: |
+          ls -la path/to/entitlements.plist
+
+      - name: debug signing
+        if: matrix.platform == 'macos-latest'
+        run: |
+          codesign --display --verbose=4 /Users/runner/work/block_hand_bitcoin/block_hand_bitcoin/src-tauri/target/release/bundle/macos/block_hand_bitcoin.app
+          codesign --verify --deep --strict /Users/runner/work/block_hand_bitcoin/block_hand_bitcoin/src-tauri/target/release/bundle/macos/block_hand_bitcoin.app
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
