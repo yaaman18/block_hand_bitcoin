@@ -73,6 +73,11 @@ jobs:
         run: |
           ls -la src-tauri/entitlements.plist
 
+      - name: check build output
+        if: matrix.platform == 'macos-latest'
+        run: |
+          ls -la /Users/runner/work/block_hand_bitcoin/block_hand_bitcoin/src-tauri/target/release/bundle/macos
+
       - name: debug signing
         if: matrix.platform == 'macos-latest'
         run: |
@@ -93,4 +98,4 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.settings.args }}
-          entitlements: src-tauri/entitlements.plist # 正しいパスを設定
+          entitlements: src-tauri/entitlements.plist
