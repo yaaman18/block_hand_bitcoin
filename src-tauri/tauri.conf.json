@@ -45,9 +45,6 @@
         "minimumSystemVersion": "10.11",
         "signingIdentity": "Developer ID Application: Mitsuyuki Yamaguchi"
       }
-    },
-    "provisioningProfiles": {
-      "block.hand.bitcoin.dev": "~/Library/MobileDevice/Provisioning Profiles/bf5e8379-0ff3-46de-b304-9d78822b9663.provisionprofile"
     }
   }
 }
