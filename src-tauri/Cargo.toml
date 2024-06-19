@@ -22,8 +22,6 @@ bitcoin = "0.32.1"
 rand = "0.8.5"
 hex = "0.4.3"
 bip39 = "2.0.0"
-
-
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]

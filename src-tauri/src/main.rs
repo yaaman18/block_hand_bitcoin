@@ -57,7 +57,7 @@ fn stretch_hash(concatenated_hash: &[u8]) -> Result<Vec<u8>, String> {
 }
 
 #[tauri::command]
-fn generate_mnemonic_phrase(provided_code: &str, password_string: &str) -> Result<(String, String), String> {
+fn generate_hd_wallet_xprv(provided_code: &str, password_string: &str) -> Result<(String, String), String> {
     let concatenated_hash = hash_and_concatenate(provided_code, password_string)?;
     let stretched_hash = stretch_hash(&concatenated_hash)?;
 
@@ -75,10 +75,8 @@ fn generate_mnemonic_phrase(provided_code: &str, password_string: &str) -> Resul
 fn main() {
     Builder::default()
         .invoke_handler(tauri::generate_handler![
-            generate_mnemonic_phrase
+            generate_hd_wallet_xprv
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
-
