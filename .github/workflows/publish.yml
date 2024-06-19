@@ -66,11 +66,6 @@ jobs:
         run: |
           security find-certificate -a -c "Developer ID Application: Mitsuyuki Yamaguchi" -p
 
-      - name: verify entitlements file
-        if: matrix.platform == 'macos-latest'
-        run: |
-          ls -la src-tauri/entitlements.plist
-
       - name: check build output
         if: matrix.platform == 'macos-latest'
         run: |
@@ -97,4 +92,3 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.settings.args }}
-          entitlements: src-tauri/entitlements.plist
