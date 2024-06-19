@@ -27,8 +27,8 @@ jobs:
       - name: import apple certificate
         if: matrix.platform == 'macos-latest'
         env:
-          APPLE_CERTIFICATE: ${{ secrets.secrets.BLOCK_HAND_BITCOIN }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.Vaultwearadmin }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
         run: |
           echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
           security import certificate.p12 -k $RUNNER_TEMP/codesign.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
@@ -36,10 +36,10 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.3V6AL93ZSM }}
-          APPLE_ID: ${{ secrets.gucchiyama8551@hotmail.co.jp }}
-          APPLE_PASSWORD: ${{ secrets.rjab-vcct-yhpq-xcdd }}
-          APPLE_TEAM_ID: ${{ secrets.3V6AL93ZSM }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
           tagName: app-v__VERSION__ # the action automatically replaces __VERSION__ with the app version.
           releaseName: 'App v__VERSION__'
