@@ -17,51 +17,57 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
+
       - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: 20.9.0
+
       - name: install Rust stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+
       - name: install GTK+3 (Ubuntu)
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev
+
       - name: install GTK+3 (macOS)
         if: matrix.platform == 'macos-latest'
         run: |
           brew install gtk+3
+
       - name: install app dependencies and build it
         run: yarn && yarn build
 
       - name: import apple certificate
         if: matrix.platform == 'macos-latest'
-        uses: apple-actions/import-certificate@v1
-      - name: list keychains
-        if: matrix.platform == 'macos-latest'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
         run: |
+          echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
+          security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
+          security list-keychains -d user -s build.keychain
+          security list-keychains -d user -s login.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
+          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$APPLE_CERTIFICATE_PASSWORD" build.keychain
           security list-keychains
+          security find-identity -v -p codesigning
 
-          env:
-            APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-            APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          run: |
-            echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
-            security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-            security list-keychains -d user -s build.keychain
-            security list-keychains -d user -s login.keychain
-            security default-keychain -s build.keychain
-            security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-            security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-            security set-key-partition-list -S apple-tool:,apple: -s -k "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-            security list-keychains
-            security find-identity -v -p codesigning # 証明書のリストを表示
       - name: list keychains
         if: matrix.platform == 'macos-latest'
         run: security list-keychains
+
+      - name: check certificates
+        if: matrix.platform == 'macos-latest'
+        run: |
+          security find-certificate -a -c "Developer ID Application: Mitsuyuki Yamaguchi" -p
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,3 +82,4 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.settings.args }}
+          entitlements: path/to/entitlements.plist
