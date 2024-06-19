@@ -16,17 +16,19 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
+          cache: 'yarn'
 
-      - name: install Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - name: Install dependencies
+        run: yarn install
 
       - name: install GTK+3 (Ubuntu)
         if: matrix.platform == 'ubuntu-latest'
@@ -39,9 +41,6 @@ jobs:
         run: |
           brew install gtk+3
 
-      - name: install app dependencies and build it
-        run: yarn && yarn build
-
       - name: import apple certificate
         if: matrix.platform == 'macos-latest'
         env:
@@ -50,8 +49,7 @@ jobs:
         run: |
           echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
           security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-          security list-keychains -d user -s build.keychain
-          security list-keychains -d user -s login.keychain
+          security list-keychains -d user -s build.keychain login.keychain
           security default-keychain -s build.keychain
           security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
           security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
@@ -84,7 +82,8 @@ jobs:
           codesign --display --verbose=4 /Users/runner/work/block_hand_bitcoin/block_hand_bitcoin/src-tauri/target/release/bundle/macos/block_hand_bitcoin.app
           codesign --verify --deep --strict /Users/runner/work/block_hand_bitcoin/block_hand_bitcoin/src-tauri/target/release/bundle/macos/block_hand_bitcoin.app
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
