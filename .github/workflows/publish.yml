@@ -36,22 +36,29 @@ jobs:
           brew install gtk+3
       - name: install app dependencies and build it
         run: yarn && yarn build
+
       - name: import apple certificate
         if: matrix.platform == 'macos-latest'
-        env:
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        uses: apple-actions/import-certificate@v1
+      - name: list keychains
+        if: matrix.platform == 'macos-latest'
         run: |
-          echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
-          security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-          security list-keychains -d user -s build.keychain
-          security list-keychains -d user -s login.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
-          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple: -s -k "$APPLE_CERTIFICATE_PASSWORD" build.keychain
           security list-keychains
-          security find-identity -v -p codesigning # 証明書のリストを表示
+
+          env:
+            APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+            APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          run: |
+            echo "$APPLE_CERTIFICATE" | base64 --decode > certificate.p12
+            security create-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
+            security list-keychains -d user -s build.keychain
+            security list-keychains -d user -s login.keychain
+            security default-keychain -s build.keychain
+            security unlock-keychain -p "$APPLE_CERTIFICATE_PASSWORD" build.keychain
+            security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+            security set-key-partition-list -S apple-tool:,apple: -s -k "$APPLE_CERTIFICATE_PASSWORD" build.keychain
+            security list-keychains
+            security find-identity -v -p codesigning # 証明書のリストを表示
       - name: list keychains
         if: matrix.platform == 'macos-latest'
         run: security list-keychains
