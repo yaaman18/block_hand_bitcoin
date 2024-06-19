@@ -39,7 +39,7 @@
         "icons/icon.ico"
       ],
       "macOS": {
-         "entitlements": "src-tauri/entitlements.plist",
+        "entitlements": "src-tauri/entitlements.plist",
         "exceptionDomain": "",
         "frameworks": [],
         "minimumSystemVersion": "10.11",
