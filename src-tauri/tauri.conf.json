@@ -19,7 +19,7 @@
     },
     "windows": [
       {
-        "title": "block_han_bitcoin",
+        "title": "block_hand_bitcoin",
         "width": 900,
         "height": 1100
       }
@@ -37,7 +37,17 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "macOS": {
+        "entitlements": "path/to/entitlements.plist",
+        "exceptionDomain": "",
+        "frameworks": [],
+        "minimumSystemVersion": "10.11",
+        "signingIdentity": "Developer ID Application: Mitsuyuki Yamaguchi"
+      }
+    },
+    "provisioningProfiles": {
+      "block.hand.bitcoin.dev": "~/Library/MobileDevice/Provisioning Profiles/bf5e8379-0ff3-46de-b304-9d78822b9663.provisionprofile"
     }
   }
 }
