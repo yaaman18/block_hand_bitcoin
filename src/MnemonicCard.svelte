@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher } from 'svelte';
     export let mnemonicPhrase;
     export let isCopied;
@@ -7,23 +7,24 @@
 
     const dispatch = createEventDispatcher()
     function clickClose() {
-    dispatch('closeDialog')
+        dispatch('closeDialog')
     }
 </script>
-
 
 <dialog bind:this={dialog}>
     <div class="dialog">
         <div class="card">
-        <div class="card-content">
-            <p class="key">Mnemonic Phrase:</p>
-            <p class="mnemonic">{mnemonicPhrase}</p>
-            <button class="copy" on:click={() => copyToClipboard(mnemonicPhrase)}>Copy to Clipboard</button>
-            {#if isCopied}
-                <p class="copied-message">Copied!</p>
-            {/if}
-            <button on:click={clickClose}>Close</button>
-        </div>
+            <div class="card-content">
+                <p class="key">Mnemonic Phrase:</p>
+                <div class="mnemonic-wrapper">
+                    <p class="mnemonic">{mnemonicPhrase}</p>
+                </div>
+                <button class="copy" on:click={() => copyToClipboard(mnemonicPhrase)}>Copy to Clipboard</button>
+                <button on:click={clickClose}>Close</button>
+                {#if isCopied}
+                    <p class="copied-message">Copied!</p>
+                {/if}
+            </div>
         </div>
     </div>
 </dialog>
@@ -47,9 +48,8 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 80%;
-        max-width: 500px;
-         height: 350px;
+        width: 550px;
+        height: 420px;
     }
     .card-content {
         display: flex;
@@ -63,10 +63,17 @@
         margin-right: 2rem;
         margin-bottom: 2vh;
         font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 2.0;
         overflow-wrap: break-word;
         text-align: left;
     }
-    .copy{
+    .mnemonic-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .copy {
         margin-top: 2rem;
         margin-bottom: 2rem;
     }
