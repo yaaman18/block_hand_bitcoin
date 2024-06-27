@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1",
+    "@tauri-apps/cli": "^1.5.14",
     "bs58": "^5.0.0",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "@tauri-apps/cli": "^1",
     "@tsconfig/svelte": "^5.0.2",
     "svelte": "^4.2.8",
     "svelte-check": "^3.4.6",
