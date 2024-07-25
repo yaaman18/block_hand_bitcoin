@@ -267,8 +267,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "block_hand_bitcoin"
-version = "0.0.1"
+name = "block_hand_"
+version = "0.0.2"
 dependencies = [
  "argon2",
  "bip39",

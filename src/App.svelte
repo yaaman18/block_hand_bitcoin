@@ -7,7 +7,6 @@
 
 	let providedCode = '';
 	let passwordString = '';
-
 	let mnemonicPhrase = '';
 	let error = '';
 	let warning = '';
@@ -70,9 +69,8 @@
                 loader.style.display = 'none';
             }
             if (result) {
-
                 mnemonicPhrase = result[1];
-				  console.log("Generated Mnemonic Phrase:", mnemonicPhrase);
+				console.log("Generated Mnemonic Phrase:", mnemonicPhrase);
                 if (mnemonicDisplay !== null) {
                     mnemonicDisplay.innerText = mnemonicPhrase;
                 }
@@ -132,14 +130,14 @@
 
 <div class="container">
 
-<Header title="Block Hand Bitcoin" />
+<Header title="Block Hand" />
 
 
 		<div class="moveUp2"></div>
 
-		<h2>Let's start using the Bitcoin mnemonic phrase generator</h2>
+		<h2>Let's start using the mnemonic phrase generator</h2>
 		<h4>
-			Block Hand Bitcoin is an open-source application that generates mnemonic phrases.<br>
+			Block Hand is an open-source application that generates mnemonic phrases.<br>
 			By combining the string engraved on your accessory with your own unique password, you can manage the mnemonics of your Bitcoin wallet.
 		</h4>
 		<h3>
@@ -221,43 +219,6 @@
 
 
 
-
-  .moveUp2 {
-		position: absolute;
-		right: -30px;
-        bottom: -100px; /* アニメーション開始位置 */
-        width: 470px; /* 画像の幅を調整 */
-        height: 470px; /* 画像の高さを調整 */
-        background-image: url('/img/bitcoin-symbol.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-        animation: moveUp2 25s linear infinite, rotate2 19s linear infinite;
-        animation-delay: 10s;
-		z-index: -1;
-        opacity: 0;
-    }
-
-	@keyframes moveUp2 {
-    0% {
-      bottom: -100px; /* アニメーション開始位置 */
-	opacity: 0;
-    }
-	50% {
-      opacity: .5; /* 70%の高さまでは完全に表示 */
-    }
-    100% {
-      bottom: 100vh; /* 画面の高さ */
-	  opacity: 0;
-    }
-  }
-   @keyframes rotate2 {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 
 
 

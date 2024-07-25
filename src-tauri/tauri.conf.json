@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "block_hand_bitcoin",
+    "productName": "block_hand",
     "version": "0.0.1"
   },
   "tauri": {
@@ -19,7 +19,7 @@
     },
     "windows": [
       {
-        "title": "block_hand_bitcoin",
+        "title": "block_hand",
         "width": 900,
         "height": 1200
       }
