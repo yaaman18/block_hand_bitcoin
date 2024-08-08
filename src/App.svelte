@@ -89,14 +89,13 @@
 
 	// 入力検証を行う関数
 	function validateInput() {
-		// Base58形式の検証
+		// Base58形式の検証（providedCodeのみ）
 		let isBase58Valid = true;
 		try {
 			bs58.decode(providedCode);
-			bs58.decode(passwordString);
 			warning = '';
 		} catch (e) {
-			warning = 'Please enter the Base58 characters';
+			warning = 'Please enter the Base58 characters for the provided code';
 			isBase58Valid = false;
 		}
 
@@ -115,7 +114,7 @@
 	function generateKeys() {
 		handleFormSubmit();
 		openDialog();
-	}
+}
 
 
 
@@ -141,9 +140,7 @@
 			By combining the string engraved on your accessory with your own unique password, you can manage the mnemonics of your Bitcoin wallet.
 		</h4>
 		<h3>
-			Please enter a password using characters other than
-			+, /, 0 (zero), O (uppercase 'o'), I (uppercase 'i'),
-			and l (lowercase 'L') by Base58
+			Please enter a password using over 8 characters.
 		</h3>
 
 		<div class="loader"></div>

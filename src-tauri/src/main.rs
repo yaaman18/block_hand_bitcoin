@@ -13,8 +13,8 @@ const ERR_MNEMONIC_GENERATION: &str = "Mnemonic generation error";
 
 // 共通処理の抽出
 fn hash_and_concatenate(provided_code: &str, password_string: &str) -> Result<Vec<u8>, String> {
-    // 入力値の長さとBase58形式のチェック
-    if provided_code.len() < 16 || password_string.len() < 8 || bs58::decode(provided_code).into_vec().is_err() || bs58::decode(password_string).into_vec().is_err() {
+    // 入力値の長さとprovided_codeのBase58形式のチェック
+    if provided_code.len() < 16 || password_string.len() < 8 || bs58::decode(provided_code).into_vec().is_err() {
         return Err(format!("{}\n{}", ERR_INPUT_LENGTH, ERR_INPUT_FORMAT));
     }
 
